@@ -8,7 +8,10 @@
 
 
 controller1 = Product.new({name:"DualShock4_Gold",price:48,image_url:"https://m.media-amazon.com/images/I/81ELkUu9omL._AC_UL436_.jpg",description:"Enhanced analog sticks"})
+controller1.save
 
 controller2 = Product.new({name:"DualShock4_Crystal",price:55,image_url:"https://m.media-amazon.com/images/I/71uZID+EhLL._AC_UL436_.jpg",description:"Charge efficiently"})
+controller2.save 
 
 controller3 = Product.new({name:"DualShock4_ChangingColor",price:75,image_url:"https://m.media-amazon.com/images/I/91OaXCM75KL._AC_UL436_.jpg",description:"Color changing effect"})
+controller3.save
