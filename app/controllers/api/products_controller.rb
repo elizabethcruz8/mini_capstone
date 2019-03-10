@@ -1,6 +1,23 @@
 class Api::ProductsController < ApplicationController
   def index 
     @products = Product.all 
+
+    if params["search"]
+      @products = @products.where("name ILIKE ?", "%#{params["search"]}%")
+    end 
+
+    if params["discount"]
+      @products = @products.where("price < ?", 60)
+    end 
+
+    if params["sort"] == "price" && params["sort_order"] == "asc"
+      @products = @products.order(:price => :asc)
+    elsif params["sort"] == "price" && params["sort_order"] == "desc"
+      @products = @products.order(:price => :desc)
+    else 
+      @products = @products.order(:id => :desc)
+    end
+
     render "index.json.jbuilder"
   end 
 
@@ -10,8 +27,11 @@ class Api::ProductsController < ApplicationController
     price: params[:body_price],
     description: params[:body_description],
     image_url: params[:body_image_url])
-    @product.save
-    render "show.json.jbuilder"
+    if @product.save
+      render "show.json.jbuilder"
+    else 
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end 
   end 
 
   def show
@@ -25,8 +45,11 @@ class Api::ProductsController < ApplicationController
     @product.price = params[:body_price] || @product.price
     @product.description = params[:body_description] || @product.description
     @product.image_url = params[:body_image_url] || @product.image_url
-    @product.save
-    render "show.json.jbuilder"
+    if @product.save
+      render "show.json.jbuilder"
+    else 
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end 
   end 
   def destroy 
     @product = Product.find_by(id: params[:id])
@@ -34,25 +57,3 @@ class Api::ProductsController < ApplicationController
     render json: {message: "Product succesfully destroyed!"}
   end
 end 
-
-
-
-
-  # def products_method
-  #   @products = Product.all
-  #   render "products.json.jbuilder"
-  # end
-
-  # # def products_method #to view all 
-  # #   @controller = Product.all 
-  # #   @controller2 = Product.all
-  # #   @controller3 = Product.all
-  # # end 
-  
-  # def one_product_method 
-  #   product_id = params["id"]  #first thing is find id 
-  #   # @message = "The given id is #{product_id}"
-  #   @product = Product.find_by(id: product_id)  #second find product  
-  #   render "product_query.json.jbuilder"
-  # end 
-
