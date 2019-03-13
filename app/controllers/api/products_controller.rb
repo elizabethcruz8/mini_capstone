@@ -1,4 +1,5 @@
 class Api::ProductsController < ApplicationController
+  
   def index 
     @products = Product.all 
 
@@ -38,9 +39,9 @@ class Api::ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
     render "show.json.jbuilder"
-  end 
+  end
 
-  def update
+  def update 
     @product = Product.find_by(id: params[:id])
     @product.name = params[:body_name] || @product.name 
     @product.price = params[:body_price] || @product.price
@@ -52,6 +53,7 @@ class Api::ProductsController < ApplicationController
       render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
     end 
   end 
+
   def destroy 
     @product = Product.find_by(id: params[:id])
     @product.destroy

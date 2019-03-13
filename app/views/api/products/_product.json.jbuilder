@@ -8,6 +8,7 @@ json.tax product.tax
 json.total product.total 
 
 json.supplier product.supplier
+
 # # json.supplier do 
 # #   json.id product.supplier.id 
 # #   json.name product.supplier.name 

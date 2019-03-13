@@ -6,7 +6,7 @@ class Product < ApplicationRecord
   validates :description, presence: true 
   validates :description, length: { in: 2..500 } 
 
- 
+
   belongs_to :supplier 
   #Product belongs to supplier 
   # def supplier 
@@ -17,6 +17,7 @@ class Product < ApplicationRecord
   # def images #product has many images 
   #   Image.where(product_id: id) #self.id 
   # end 
+  has_many :orders 
 
   def is_discounted? 
     if price  <= 10 == true 
